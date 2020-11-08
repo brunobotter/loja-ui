@@ -1,0 +1,104 @@
+<form class="example-form" [formGroup]="os">
+    <div>
+        <span class="titulo">Detalhes Da Ordem De Serviço</span>
+    </div>
+    <mat-dialog-content class="mat-typography">
+    <table class="example-full-width" cellspacing="0">
+      <tr>  
+        <td><mat-form-field style="width: 50%;"   [appearance]="'outline'"> 
+          <mat-label>Id</mat-label>
+          <input matInput formControlName="id" readonly>
+        </mat-form-field></td> 
+        </tr>
+    </table>
+    <table class="example-full-width" cellspacing="0">
+      <tr>  
+           
+            <td><mat-form-field   [appearance]="'outline'"> 
+                <mat-label>cliente</mat-label>
+                <input matInput   readonly [value]="cliente.nome">
+              </mat-form-field></td>
+         
+      
+        <td><mat-form-field   [appearance]="'outline'"> 
+            <mat-label>Funcionario</mat-label>
+            <input matInput readonly [value]="funcionario.nome">
+          </mat-form-field></td>
+    
+    </tr>
+    </table> 
+      <table class="example-full-width" cellspacing="0"><tr>
+        <td>
+          <mat-form-field appearance="fill" >
+          <mat-label>Data Entrada</mat-label>
+          <input matInput [matDatepicker]="dp1" disabled formControlName="dataEntrada">
+          <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+          <mat-datepicker #dp1></mat-datepicker>
+        </mat-form-field>
+      </td>
+  </table>
+  <table class="example-full-width" cellspacing="0"><tr>
+  <td>
+    <mat-form-field appearance="fill" >
+      <mat-label>Data Saida</mat-label>
+      <input matInput [matDatepicker]="dp2" disabled formControlName="dataSaida">
+      <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+      <mat-datepicker #dp2></mat-datepicker>
+    </mat-form-field>
+</td>
+</tr></table>
+        <table class="example-full-width" cellspacing="0"><tr>
+          <td><mat-form-field   [appearance]="'outline'"> 
+            <mat-label>Preço</mat-label>
+            <input matInput formControlName="preco" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+          </mat-form-field></td>
+          
+          <td>
+            <mat-form-field  [appearance]="'outline'">
+              <mat-label>Status</mat-label>
+              <mat-select formControlName="status" name="status"  >
+                <mat-option value="ABERTA"> Aberta </mat-option>
+                <mat-option value="CANCELADA"> Cancelada </mat-option>
+                <mat-option value="ORÇAMENTO"> Orçamento </mat-option>
+                <mat-option value="FINALIZADA"> Finalizada </mat-option>
+              </mat-select>
+          </mat-form-field>
+        </td>
+        
+      </tr></table>
+      <div fxLayout="row" fxLayoutGap="16px" class="header-padrao">
+        <mat-card-subtitle class="no-margin">Comentarios</mat-card-subtitle>
+      </div>
+      <div formArrayName="comentarios" *ngFor="let descricao of descricoes.controls; let i = index">
+          <div [formGroupName]="i">
+            <table class="example-full-width" cellspacing="0"><tr>
+             
+              <td>
+          <mat-form-field [appearance]="'outline'">
+            <mat-label >Comentario</mat-label>
+            <textarea matInput  readonly formControlName="comentario"></textarea>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field appearance="fill" >
+            <mat-label>Data Envio</mat-label>
+            <input matInput [matDatepicker]="dp4" disabled formControlName="dataEnvio">
+            <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+            <mat-datepicker #dp4></mat-datepicker>
+          </mat-form-field>
+        </td>
+        <td>
+          <button mat-raised-button color="warn" (click)="deletar(i)">Deletar</button>
+        </td>
+        </tr>
+        </table>
+        </div>
+      </div>
+    </mat-dialog-content>
+      <mat-dialog-actions align="center">
+        <button mat-raised-button color="primary" style="margin-right: 2%;" (click)="salvar()">Salvar</button>
+        <button mat-raised-button color="primary" style="margin-right: 2%;" >Gerar Pdf</button>
+        <button mat-raised-button color="warn" style="margin-right: 2%;" (click)="finalizar()" *ngIf="finalizada">Finalizar Os</button>
+        <button mat-raised-button color="warn" (click)="sair()">Sair</button>
+      </mat-dialog-actions>
+      </form>

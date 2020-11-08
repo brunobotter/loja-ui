@@ -1,0 +1,28 @@
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+    padding: 10%;
+    margin-left: 5%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+  
+  td {
+    padding-right: 8px;
+  }
+
+.divbotao{
+  width: 500px;
+  display: flex;
+  justify-content: center;
+}
+
+.titulo{
+  font-size: 30px;
+  font-weight: 800;
+  margin-left: 18%;
+}
+

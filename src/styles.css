@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.sucesso{
+    color: rgb(255, 255, 255);
+    background-color:rgb(19, 212, 13);
+}
+
+.erro{
+    color: rgb(255, 255, 255);
+    background-color:rgb(236, 26, 26);
+}
+
+.mat-simple-snackbar-action {
+    color: rgb(255, 255, 255) !important;
+}

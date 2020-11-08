@@ -1,0 +1,85 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav"
+        [ngClass]="{hidden: !(isHandset$ | async)}"
+        fixedInViewport="false"
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="(isHandset$ | async) === false">
+      <mat-toolbar>Menu</mat-toolbar>
+      <mat-nav-list>
+        <mat-accordion class="example-headers-align" multi>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Produto
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <button mat-stroked-button color="warn" routerLink="/produto">Cadastrar Novo Produto</button>
+            <button mat-stroked-button color="warn" routerLink="/produto-lista">Listar Todos os Produtos</button>  
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Funcionario
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <button mat-stroked-button color="warn" routerLink="/funcionario">Cadastrar Novo Funcionario</button>
+            <button mat-stroked-button color="warn" routerLink="/funcionario-lista">Listar Todos Os Funcionarios</button>  
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Cliente
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <button mat-stroked-button color="warn" routerLink="/cliente">Cadastrar Novo Cliente</button>
+            <button mat-stroked-button color="warn" routerLink="/cliente-lista">Listar Todos os Clientes</button>       
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Ordem De Serviço
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <button mat-stroked-button color="warn" routerLink="/os">Cadastrar Nova OS</button>
+            <button mat-stroked-button color="warn" routerLink="/os-lista">Listar Todas as OS</button>  
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Venda
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <button mat-stroked-button color="warn" routerLink="/venda">Nova Venda</button>
+            <button mat-stroked-button color="warn" routerLink="/venda-lista">Listar Todas As Vendas</button>  
+          </mat-expansion-panel>
+        
+         
+        </mat-accordion>
+        <div class="example-action-buttons">
+          <button mat-button (click)="accordion.openAll()">Expandir todos</button>
+          <button mat-button (click)="accordion.closeAll()">Fechar Todos</button>
+        </div>
+      </mat-nav-list>
+     
+    </mat-sidenav>
+  
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <button
+          type="button"
+          mat-icon-button
+          (click)="drawer.toggle()" >
+          <mat-icon>menu</mat-icon>
+        </button>
+        
+        <span>loja</span>
+      </mat-toolbar>
+
+      <ng-content>
+   
+      </ng-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  
+  </mat-sidenav-container>

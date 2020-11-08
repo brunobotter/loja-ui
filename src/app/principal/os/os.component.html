@@ -1,0 +1,72 @@
+<form class="example-form" [formGroup]="os">
+    <div>
+        <span class="titulo">Cadastro de Ordem de Serviço</span>
+    </div>
+    <table class="example-full-width" cellspacing="0">
+      <tr>
+        <td>
+        <mat-form-field class="example-full-width"  [appearance]="'outline'">
+            <mat-label>Cliente</mat-label>
+              <input readonly matInput formControlName="cliente">
+              <button (click)="pesquisa()">pesquisar</button>
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="example-full-width"  [appearance]="'outline'">
+          <mat-label>Funcionario</mat-label>
+          <mat-select formControlName="funcionario" name="funcionario" (change)="mudaFuncionario($event)">
+            <mat-option *ngFor="let funcionario of funcionarios" [value]="funcionario">
+              {{funcionario.nome}}
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
+    </td>
+    </tr>
+    </table> 
+      <table class="example-full-width" cellspacing="0"><tr>
+        <td>
+          <mat-form-field appearance="fill" class="example-full-width">
+          <mat-label>Data Entrada</mat-label>
+          <input matInput [matDatepicker]="dp1" disabled formControlName="dataEntrada">
+          <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+          <mat-datepicker #dp1></mat-datepicker>
+        </mat-form-field>
+      </td>
+   
+        <td>
+          <mat-form-field appearance="fill" class="example-full-width">
+            <mat-label>Data Saida</mat-label>
+            <input matInput [matDatepicker]="dp2" disabled formControlName="dataSaida">
+            <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+            <mat-datepicker #dp2></mat-datepicker>
+          </mat-form-field>
+      </td>
+    </tr>
+  </table>
+
+        <table class="example-full-width" cellspacing="0"><tr>
+          <td><mat-form-field class="example-full-width"  [appearance]="'outline'"> 
+            <mat-label>Preço</mat-label>
+            <input matInput formControlName="preco" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+          </mat-form-field></td>
+          
+          <td>
+            <mat-form-field class="example-full-width"  [appearance]="'outline'">
+              <mat-label>Status</mat-label>
+              <mat-select formControlName="status" name="status" (change)="mudaStatus($event)" >
+                <mat-option value="ABERTA"> Aberta </mat-option>
+                <mat-option value="CANCELADA"> Cancelada </mat-option>
+                <mat-option value="ORÇAMENTO"> Orçamento </mat-option>
+                <mat-option value="FINALIZADA"> Finalizada </mat-option>
+              </mat-select>
+          </mat-form-field>
+        </td>
+        
+      </tr></table>
+        
+      
+         <div class="divbotao">
+        <button mat-raised-button color="primary" style="margin-right: 2%;" (click)="salvar()">Salvar</button>
+        <button mat-raised-button color="warn">Limpar</button>
+    </div>
+      </form>

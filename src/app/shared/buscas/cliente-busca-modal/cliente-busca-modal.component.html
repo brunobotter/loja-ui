@@ -1,0 +1,18 @@
+<p>
+    <mat-label>Consulta CLientes</mat-label>
+    <input search [formControl]="queryFields" placeholder="pesquisar">
+</p>
+<button (click)="buscar()">buscar</button>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let resultado of data ">
+            <td>{{resultado.nome}}</td>
+        </tr>
+    </tbody>
+</table>

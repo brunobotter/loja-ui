@@ -1,0 +1,70 @@
+<form class="example-form" [formGroup]="cliente">
+  <div>
+      <span class="titulo">Cadastro de Clientes</span>
+  </div>
+  <p>
+      <mat-form-field class="example-full-width"  [appearance]="'outline'">
+          <mat-label>Nome</mat-label>
+          <input matInput formControlName="nome">
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field class="example-full-width"  [appearance]="'outline'">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email">
+      </mat-form-field>
+    </p>
+
+      <table class="example-full-width" cellspacing="0"><tr>
+        <td><mat-form-field class="example-full-width"  [appearance]="'outline'">
+          <mat-label>CPF</mat-label>
+          <input matInput formControlName="cpf">
+        </mat-form-field></td><td>
+
+        <mat-form-field class="example-full-width"  [appearance]="'outline'">
+          <mat-label>Telefone</mat-label>
+          <input matInput formControlName="telefone">
+        </mat-form-field>
+      </td></tr></table>
+
+      <table class="example-full-width" cellspacing="0"><tr>
+
+          <td><mat-form-field class="example-full-width"  [appearance]="'outline'">
+            <mat-label>Cep</mat-label>
+            <input matInput formControlName="cep" (blur)="consultaCep()" >
+          </mat-form-field></td>
+          
+          <td><mat-form-field class="example-full-width"  [appearance]="'outline'">
+            <mat-label>Endereço</mat-label>
+            <input matInput formControlName="logradouro">
+          </mat-form-field>
+      </td>
+      <td><mat-form-field class="example-full-width" [appearance]="'outline'">
+          <mat-label>Numero</mat-label>
+          <input matInput formControlName="numero">
+        </mat-form-field></td>
+        <td> </tr></table>
+
+        <table class="example-full-width" cellspacing="0"><tr>
+          <td><mat-form-field class="example-full-width" [appearance]="'outline'">
+            <mat-label>Cidade</mat-label>
+            <input matInput formControlName="cidade">
+          </mat-form-field></td>
+          <td>
+          <mat-form-field class="example-full-width"  [appearance]="'outline'">
+            <mat-label>Estado</mat-label>
+            <input matInput formControlName="estado">
+          </mat-form-field>
+      </td>
+      <td>
+          <mat-form-field class="example-full-width"  [appearance]="'outline'">
+            <mat-label>Complemento</mat-label>
+            <input matInput formControlName="complemento">
+          </mat-form-field>
+      </td> </tr>
+      </table>
+       <div class="divbotao">
+      <button mat-raised-button color="primary" style="margin-right: 2%;" (click)="atualizar()">Salvar</button>
+      <button mat-raised-button color="warn">Limpar</button>
+  </div>
+    </form>

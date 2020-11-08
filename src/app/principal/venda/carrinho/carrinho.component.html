@@ -1,0 +1,71 @@
+<form class="example-form" [formGroup]="itemFormulario">
+    <div>
+        <span class="titulo">Vendas</span>
+    </div>
+    <table class="example-full-width" cellspacing="0">
+      <tr>
+        <td>
+        <mat-form-field class="example-full-width"  [appearance]="'outline'">
+            <mat-label>produto</mat-label>
+            <mat-select formControlName="produto" name="produto" (change)="mudaproduto($event)">
+              <mat-option *ngFor="let produto of produtos" [value]="produto">
+                {{produto.nome}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Quantidade</mat-label>
+          <input matInput type="number" formControlName="quantidade" >
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>venda</mat-label>
+          <input matInput formControlName="venda" >
+        </mat-form-field>
+      </td>
+    </tr>
+    </table> 
+    <button (click)="adicionarItem()">Adicionar item</button>
+
+    <div formArrayName="listaItem" *ngFor="let item of listaItens.controls; let i = index">
+      <div [formGroupName]="i">
+        <table class="example-full-width" cellspacing="0"><tr>
+         
+          <td>
+      <mat-form-field [appearance]="'outline'">
+        <mat-label >id</mat-label>
+        <textarea matInput  readonly formControlName="id"></textarea>
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field [appearance]="'outline'">
+        <mat-label >produto</mat-label>
+        <textarea matInput  readonly formControlName="produto"></textarea>
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field [appearance]="'outline'">
+        <mat-label >quantidade</mat-label>
+        <textarea matInput  readonly formControlName="quantidade"></textarea>
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field [appearance]="'outline'">
+        <mat-label >valor</mat-label>
+        <textarea matInput  readonly formControlName="valor"></textarea>
+      </mat-form-field>
+    </td>
+    <td>
+      <button mat-raised-button color="warn" (click)="deletar(i)">Deletar</button>
+    </td>
+    </tr>
+    </table>
+    </div>
+  </div>
+  <div>
+  <button (click)="finalizar()">finalizar</button>
+</div>
+      </form>

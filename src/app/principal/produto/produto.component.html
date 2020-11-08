@@ -1,0 +1,25 @@
+<form class="example-form"  [formGroup]="produto">
+<div>
+    <span class="titulo">Cadastro de Produtos</span>
+</div>
+  
+    <table class="example-full-width" cellspacing="0" ><tr>
+      <td><mat-form-field class="example-full-width" [appearance]="'outline'">
+        <mat-label>Nome Produto</mat-label>
+        <input matInput formControlName="nome">
+      </mat-form-field></td>
+  
+    </tr></table>
+  
+    <p>
+      <mat-form-field class="example-full-width"  [appearance]="'outline'">
+        <mat-label>Preço</mat-label>
+        <input matInput currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"  formControlName="preco">
+      </mat-form-field> 
+    </p>
+  
+     <div class="divbotao">
+    <button mat-raised-button color="primary" style="margin-right: 2%;" (click)="adicionar()">Salvar</button>
+    <button mat-raised-button color="warn" (click)="limpar()">Limpar</button>
+</div>
+  </form>
