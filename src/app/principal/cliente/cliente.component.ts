@@ -30,17 +30,20 @@ export class ClienteComponent implements OnInit {
     telefone: [null, Validators.required],
     email: [null,  Validators.compose([ Validators.required, Validators.email])],
     cpf: [null, Validators.required],
-        logradouro: [null, Validators.required],
-        cep: [null, Validators.required],
-        cidade: [null, Validators.required],
-        estado: [null, Validators.required],
-        numero: [null, Validators.required],
-        bairro: [null, Validators.required],
-        complemento: [null],
+    logradouro: [null, Validators.required],
+    cep: [null, Validators.required],
+    cidade: [null, Validators.required],
+    estado: [null, Validators.required],
+    numero: [null, Validators.required],
+    bairro: [null, Validators.required],
+    complemento: [null],
     });
   }
   
 
+  hasErrors(campo: string) {
+    return this.cliente.get(campo).errors;
+  }
  
 
   adicionar(){

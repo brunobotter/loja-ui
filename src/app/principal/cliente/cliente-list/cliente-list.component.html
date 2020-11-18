@@ -1,6 +1,10 @@
 <div style="padding-left: 4%; padding-top: 2%;">
   <span style="font-size: 20PX; margin-left: 35%; ">Lista de Clientes</span>
   <div class="mat-elevation-z8" style="margin-top: 15px;">
+    <mat-form-field>
+      <input matInput  (keyup)="filtrando($event.target.value )">
+      
+    </mat-form-field>
   <table mat-table class="full-width-table" matSort aria-label="Elements" [dataSource]="dataSource.data">
     <!-- Id Column -->
     <ng-container matColumnDef="id">

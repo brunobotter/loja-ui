@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 export class OSFiltro {
   nome: string;
@@ -17,13 +18,12 @@ export class OsService {
   httpOption = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
-      
     })
   };
   constructor(private http: HttpClient) { }
   
 
-  pesquisar(filtro: OSFiltro): Promise<any>{
+  pesquisar(filtro: OSFiltro): Observable<any>{
     let params = new HttpParams()
     .set('page', filtro.page.toString())
     .set('limite', filtro.limite.toString());
@@ -31,16 +31,15 @@ export class OsService {
       params = params.set('nome', filtro.nome);
     }
   
-  return this.http.get<any>(`${this.apiUrl}`, {params})
-  .toPromise()
-  .then(response =>{
-    const ordemServico = response._embedded.osVoes;
+  return this.http.get<any>(`${this.apiUrl}/busca_por_nome/`, {params})
+  .pipe(map(response =>{
+    const ordemServico = response._embedded.oses;
     const resultado = {
       ordemServico,
       total: response.page
     };
     return resultado
-  })
+  }))
   }
  
   public listaTodos():  Observable<any>{
@@ -56,8 +55,8 @@ export class OsService {
     return this.http.post(this.apiUrl, dados, this.httpOption);
   }
 
-  public atualizar(dados): Observable<any>{
-    const url = `${this.apiUrl}`;
+  public atualizar(id, dados): Observable<any>{
+    const url = `${this.apiUrl}/${id}`;
     return this.http.put(url, dados, this.httpOption);
   }
 

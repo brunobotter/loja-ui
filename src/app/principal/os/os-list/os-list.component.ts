@@ -45,11 +45,12 @@ export class OsListComponent implements AfterViewInit, OnInit {
     this.table.dataSource = this.dataSource;
   }
 
-  pesquisar(pagina = 0, limite = 5){
+  pesquisar(pagina = 0, limite = 5, nome = ''){
     this.filtro.page = pagina;
     this.filtro.limite = limite;
+    this.filtro.nome = nome;
     this.service.pesquisar(this.filtro)
-    .then(resultado =>{ 
+    .subscribe(resultado =>{ 
       this.dataSource.data = resultado.ordemServico;
       this.dados = resultado.total;
     });
@@ -72,12 +73,12 @@ export class OsListComponent implements AfterViewInit, OnInit {
   });
   }
 
-  atualizar(idOs){
+  comentarios(idOs){
     
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.disableClose = false;
-    dialogConfig.width = "25%";
+    dialogConfig.width = "50%";
     dialogConfig.data = {idOs};
     this.dialog.open(OsModalComponent, dialogConfig).afterClosed().subscribe(res => {
     });
@@ -88,7 +89,7 @@ export class OsListComponent implements AfterViewInit, OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.disableClose = false;
-    dialogConfig.width = "100%";
+    dialogConfig.width = "50%";
     dialogConfig.data = {id};
     this.dialog.open(OsModalDetalhesComponent, dialogConfig).afterClosed().subscribe(res => {
  
@@ -97,5 +98,12 @@ export class OsListComponent implements AfterViewInit, OnInit {
  
 
 
+    filtrando(event){
+      const pagina = this.paginator.pageIndex;
+      const limite = this.paginator.pageSize;
+      let nome = event;
+      this.pesquisar(pagina, limite, nome);
+    }
+  
 
 }

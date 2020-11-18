@@ -1,5 +1,5 @@
 import { BarraService } from './../../../shared/barra-mensagem/barra.service';
-import { delay, switchMap } from 'rxjs/operators';
+import {  switchMap } from 'rxjs/operators';
 import { Venda } from './../../../shared/model/venda';
 import { Item } from './../../../shared/model/item';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,7 +7,9 @@ import { VendaoService } from './../vendao.service';
 import { ProdutoService } from './../../produto/produto.service';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Produto } from 'src/app/shared/model/produto';
+import { ProdutoBuscaModalComponent } from 'src/app/shared/buscas/produto-busca-modal/produto-busca-modal.component';
 
 @Component({
   selector: 'app-carrinho',
@@ -16,18 +18,14 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class CarrinhoComponent implements OnInit {
   itemFormulario: FormGroup;
-  produtos: Array<any>;
+  produtos: Produto = new Produto();
   vendas: Venda;
   itens: Item[];
-  
   item: Item;
   produtoRecebe: any;
-  vendaFormulario: FormGroup;
-  teste: any;
 data: any;
   constructor(private fb: FormBuilder,
     private vendaService: VendaoService,
-    private produtoService: ProdutoService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
@@ -38,12 +36,12 @@ data: any;
     }
 
   ngOnInit(): void {
+    this.carregaEmBranco();
     this.pegarDadosVenda();
-    this.carregarFormulario();
+    this.pegaLista();
   }
 
-
-  carregarFormulario(){
+  carregaEmBranco(){
     this.itemFormulario = this.fb.group({
       produto: [null],
       venda: [this.data.id],
@@ -52,25 +50,63 @@ data: any;
     });
   }
 
+
+
+  carregarFormulario(){
+    this.itemFormulario = this.fb.group({
+      produto: [null],
+      venda: [this.data.id],
+      quantidade: [null],
+      listaItem: this.fb.array([this.carregarListaItem()])
+    });
+  }
+
   pegarDadosVenda(){
     this.vendaService.listaVendaPorId(this.data).subscribe(dados =>{
       this.data = dados;
       this.carregarFormulario();
-      this.produtoService.listaTodos().subscribe(prod =>{
-        this.produtos = prod;
-      });
+     
     });
   }
+
+  pegaLista(){
+   this.vendaService.listaItemPorVenda(this.data).subscribe(dados => {    
+    this.itens = dados;
+    const itemFormArray = this.itemFormulario.get('listaItem') as FormArray;
+    itemFormArray.clear();
+    this.itens.forEach(s =>{
+      itemFormArray.push(this.fb.group({  
+        id: [s.id],
+        produto: [s.produto.nome],
+        quantidade: [s.quantidade],
+        valor: [s.valor]
+      }));
+    });
+    this.itemFormulario.patchValue(this.itens);
+   });
+   
+  }
+  
+ 
+  
 
   get produto(){
     return this.itemFormulario.get('produto');
   }
 
+  buscaProduto(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.disableClose = true;
+    dialogConfig.width = "50%";
+    this.dialog.open(ProdutoBuscaModalComponent, dialogConfig).afterClosed().subscribe(res => {
+      this.mudaproduto(res)
+      this.produtos = res;
+    });
+  }
   
   mudaproduto(e){
-    this.produto.setValue(e.target.value,{
-      onlySelf: true
-    });
+    this.produto.setValue(e);
   }
 
 
@@ -86,7 +122,6 @@ data: any;
         const itemFormArray = this.itemFormulario.get('listaItem') as FormArray;
         itemFormArray.clear()
         this.itens.forEach(s =>{
-          
           itemFormArray.push(this.fb.group({  
             id: [s.id],
             produto: [s.produto.nome],
@@ -109,21 +144,20 @@ data: any;
   
 
 
-  carregarArrayItem(item){
-    return this.fb.group({
-      id: [],
-      produto: [],
-      venda: [],
-      quantidade: [],
-      valor: []
-    })
-  }
-
   
   get listaItens(): FormArray{
     return this.itemFormulario.get('listaItem') as FormArray;
   }
 
+
+  carregarListaItem(){
+    return this.fb.group({
+      id: [''],
+      produto: [''],
+      quantidade: [''],
+      valor: ['']
+    })
+  }
 
   finalizar(){
     this.router.navigate([`/venda/${this.data.id}/finalizar-venda`], { relativeTo: this.route });

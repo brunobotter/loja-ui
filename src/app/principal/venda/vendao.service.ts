@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 export class vendaFiltro {
   nome: string;
@@ -20,7 +21,7 @@ export class VendaoService {
   constructor(private http: HttpClient) { }
 
 
-  pesquisar(filtro: vendaFiltro): Promise<any>{
+  pesquisar(filtro: vendaFiltro): Observable<any>{
     let params = new HttpParams()
     .set('page', filtro.page.toString())
     .set('limite', filtro.limite.toString());
@@ -28,16 +29,16 @@ export class VendaoService {
       params = params.set('nome', filtro.nome);
     }
   
-  return this.http.get<any>(`${this.apiUrl}`, {params})
-  .toPromise()
-  .then(response =>{
-    const venda = response._embedded.vendaVoes;
+  return this.http.get<any>(`${this.apiUrl}/busca_por_nome/`, {params})
+  .pipe(map(response =>{
+    const venda = response._embedded.vendas;
     const resultado = {
       venda,
       total: response.page
-    };
+    }
     return resultado
-  })
+    
+  }));
   }
   public listaTodos():  Observable<any>{
     return this.http.get(this.apiUrl);

@@ -38,6 +38,9 @@ export class FuncionarioComponent implements OnInit {
     });
   }
 
+  hasErrors(campo: string) {
+    return this.funcionario.get(campo).errors;
+  }
   adicionar(){
    this.service.salvar(this.funcionario.value).subscribe( dados =>{
      console.log(dados)

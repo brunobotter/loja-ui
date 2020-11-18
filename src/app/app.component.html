@@ -1,11 +1,16 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer class="sidenav"
+    <mat-sidenav #drawer class="sidenav" 
         [ngClass]="{hidden: !(isHandset$ | async)}"
         fixedInViewport="false"
         [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'"
         [opened]="(isHandset$ | async) === false">
-      <mat-toolbar>Menu</mat-toolbar>
+      <mat-toolbar  >Menu 
+        <mat-icon style="margin-left: 2px;" title="Expandir" (click)="accordion.openAll()">add_circle</mat-icon>
+        <mat-icon style="margin-right: 2px;" title="Remover" (click)="accordion.closeAll()">remove_circle</mat-icon>
+      </mat-toolbar>
+  
       <mat-nav-list>
         <mat-accordion class="example-headers-align" multi>
           <mat-expansion-panel>
@@ -56,24 +61,22 @@
         
          
         </mat-accordion>
-        <div class="example-action-buttons">
-          <button mat-button (click)="accordion.openAll()">Expandir todos</button>
-          <button mat-button (click)="accordion.closeAll()">Fechar Todos</button>
-        </div>
+
       </mat-nav-list>
      
     </mat-sidenav>
   
-    <mat-sidenav-content>
+    <mat-sidenav-content >
       <mat-toolbar color="primary">
-        <button
+        <button 
           type="button"
           mat-icon-button
           (click)="drawer.toggle()" >
           <mat-icon>menu</mat-icon>
         </button>
         
-        <span>loja</span>
+        <span [routerLink]="['']">VRB BAZAR</span>
+        <span (click)="sair()" [hidden]="esconderBarra()">Sair</span>
       </mat-toolbar>
 
       <ng-content>
@@ -81,5 +84,5 @@
       </ng-content>
       <router-outlet></router-outlet>
     </mat-sidenav-content>
-  
+   
   </mat-sidenav-container>

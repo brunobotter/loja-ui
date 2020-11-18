@@ -4,25 +4,19 @@
       <span class="titulo">Vendas</span>
   </div>
   <table class="example-full-width" cellspacing="0">
+      
     <tr>
       <td>
-      <mat-form-field class="example-full-width"  [appearance]="'outline'">
+        <mat-form-field class="example-full-width"  [appearance]="'outline'">
           <mat-label>Cliente</mat-label>
-          <mat-select formControlName="cliente" name="cliente" (change)="mudaCliente($event)">
-            <mat-option *ngFor="let cliente of clientes" [value]="cliente">
-              {{cliente.nome}}
-            </mat-option>
-          </mat-select>
+              <input readonly matInput (click)="buscaCliente()">{{clientes.nome}}
       </mat-form-field>
     </td>
+    
     <td>
       <mat-form-field class="example-full-width"  [appearance]="'outline'">
         <mat-label>Funcionario</mat-label>
-        <mat-select formControlName="funcionario" name="funcionario" (change)="mudaFuncionario($event)">
-          <mat-option *ngFor="let funcionario of funcionarios" [value]="funcionario">
-            {{funcionario.nome}}
-          </mat-option>
-        </mat-select>
+            <input readonly matInput (click)="buscaFuncionario()">{{funcionarios.nome}}
     </mat-form-field>
   </td>
   </tr>
@@ -36,28 +30,26 @@
       </mat-form-field>
     </td>
     <td>
-      <mat-form-field class="example-full-width" appearance="outline">
+      <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Desconto</mat-label>
-        <input matInput formControlName="desconto" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+        <input matInput readonly formControlName="desconto" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
       </mat-form-field>
     </td></tr></table>
 
       <table class="example-full-width"  cellspacing="0"><tr>
         <td>
-          <mat-form-field  appearance="outline" class="example-full-width">
+          <mat-form-field  appearance="fill" class="example-full-width">
           <mat-label>Valor Total</mat-label>
-          <input matInput formControlName="valorTotal" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+          <input matInput readonly formControlName="valorTotal" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
         </mat-form-field>
       </td>
         <td>
           <mat-form-field class="example-full-width"  [appearance]="'outline'">
             <mat-label>Status da Venda</mat-label>
-            <mat-select formControlName="statusVenda" name="status" (change)="mudaStatus($event)" >
-              <mat-option value="ABERTA"> Aberta </mat-option>
-              <mat-option value="FINALIZADA"> Finalizada </mat-option>
-            </mat-select>
+            <input matInput formControlName="statusVenda" readonly>
         </mat-form-field>
       </td></tr></table>
  
-      <button (click)="adicionarProdutos()">Adicionar produtos</button>
+      <button mat-raised-button color="primary" (click)="adicionarProdutos()"
+      [disabled]="!vendaFormulario.valid">Adicionar produtos</button>
     </form>

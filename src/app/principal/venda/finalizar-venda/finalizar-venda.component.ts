@@ -33,7 +33,6 @@ export class FinalizarVendaComponent implements OnInit {
       this.venda = data;
       this.vendaService.calculaVendas(this.data).subscribe(dados =>{
         this.valor = dados.valorTotal;
-        console.log(this.valor);
         this.carregarFormulario();
       })
       
@@ -42,12 +41,12 @@ export class FinalizarVendaComponent implements OnInit {
 
 carregarFormularioEmBranco(){
   this.vendaFormulario = this.fb.group({
-    dataVenda: [],
-    cliente: [],
-    funcionario: [],
-    desconto: [],
-    valorTotal: [],
-    statusVenda: [],
+    dataVenda: [null],
+    cliente: [null],
+    funcionario: [null],
+    desconto: [null],
+    valorTotal: [null],
+    statusVenda: [null],
   });
 }
 
@@ -76,7 +75,7 @@ carregarFormularioEmBranco(){
   }
 
   finalizar(){
-    this.vendaService.finalizarVenda(this.data, this.venda.desconto).subscribe(dados =>{
+    this.vendaService.finalizarVenda(this.data, this.vendaFormulario.value.desconto).subscribe(dados =>{
       this.snackBar.barraSucesso('Venda', 'Adicionado com Sucesso!');
     });
     this.router.navigate(['']);

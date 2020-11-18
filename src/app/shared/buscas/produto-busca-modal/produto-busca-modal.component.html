@@ -1,0 +1,22 @@
+<form class="formulario">
+
+<p>
+    <mat-label class="titulo">Consulta de produtos</mat-label>
+    <input search class="busca" (keyup)="filtrando($event.target.value)" placeholder="pesquisar">
+</p>
+
+<table class="tabela">
+    <thead>
+        <tr>
+            <td class="titulo-tabela">Nome</td>
+            <td class="titulo-tabela">Preço</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let resultado of data">
+            <td (click)="seleciona(resultado.id)"><a class="cor">{{resultado.nome}}</a></td>
+            <td (click)="seleciona(resultado.id)"><a class="cor">{{resultado.preco}}</a></td>
+        </tr>
+    </tbody>
+</table>
+</form>

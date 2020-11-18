@@ -1,4 +1,4 @@
-import { filter } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 import { FuncionarioDetalhesModalComponent } from './../funcionario-detalhes-modal/funcionario-detalhes-modal.component';
 import { FuncionarioAtualizarModalComponent } from './../funcionario-atualizar-modal/funcionario-atualizar-modal.component';
 import { FuncionarioService, FuncionarioFiltro } from './../funcionario.service';
@@ -9,6 +9,9 @@ import { MatTable } from '@angular/material/table';
 import { FuncionarioListDataSource } from './funcionario-list-datasource';
 import { Funcionario } from 'src/app/shared/model/funcionario';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { HttpParams } from '@angular/common/http';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-funcionario-list',
@@ -41,16 +44,15 @@ export class FuncionarioListComponent implements AfterViewInit, OnInit {
     this.table.dataSource = this.dataSource;
   }
 
-  pesquisar(pagina = 0, limite = 5){
+  pesquisar(pagina = 0, limite = 5, nome = ''){
     this.filtro.page = pagina;
     this.filtro.limite = limite;
+    this.filtro.nome = nome;
     this.service.pesquisar(this.filtro)
+    
     .subscribe(resultado =>{ 
-      
-      this.dataSource.data = resultado._embedded.funcionarioVoes;
+      this.dataSource.data = resultado.funcionario;
       this.dados = resultado.page;
-      console.log(this.dataSource.data)
-      console.log(this.dados)
     });
   }
 
@@ -83,8 +85,10 @@ export class FuncionarioListComponent implements AfterViewInit, OnInit {
   }
 
   filtrando(event){
-    
+    const pagina = this.paginator.pageIndex;
+    const limite = this.paginator.pageSize;
+    let nome = event;
+    this.pesquisar(pagina, limite, nome);
   }
 
-  
 }

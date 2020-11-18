@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Funcionario } from 'src/app/shared/model/funcionario';
+import { map } from 'rxjs/operators';
 
 export class FuncionarioFiltro {
   nome: string;
@@ -30,9 +31,15 @@ export class FuncionarioService {
     if(filtro.nome){
       params = params.set('nome', filtro.nome);
     }
-  
-  return this.http.get<any>(`${this.apiUrl}`, {params})
-  .pipe();
+  return this.http.get<any>(`${this.apiUrl}/busca_por_nome/`, {params})
+  .pipe(map(response =>{
+    const funcionario = response._embedded.funcionarios;
+    const resultado = {
+      funcionario,
+      total: response.page
+    };
+    return resultado
+  }));
   }
 
 

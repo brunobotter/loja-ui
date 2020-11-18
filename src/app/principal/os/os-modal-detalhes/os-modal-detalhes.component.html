@@ -60,7 +60,6 @@
                 <mat-option value="ABERTA"> Aberta </mat-option>
                 <mat-option value="CANCELADA"> Cancelada </mat-option>
                 <mat-option value="ORÇAMENTO"> Orçamento </mat-option>
-                <mat-option value="FINALIZADA"> Finalizada </mat-option>
               </mat-select>
           </mat-form-field>
         </td>
@@ -69,7 +68,8 @@
       <div fxLayout="row" fxLayoutGap="16px" class="header-padrao">
         <mat-card-subtitle class="no-margin">Comentarios</mat-card-subtitle>
       </div>
-      <div formArrayName="comentarios" *ngFor="let descricao of descricoes.controls; let i = index">
+      <div *ngIf="verifica">
+      <div formArrayName="comentarios" *ngFor="let descricao of descricoes.controls; let i = index" >
           <div [formGroupName]="i">
             <table class="example-full-width" cellspacing="0"><tr>
              
@@ -94,6 +94,7 @@
         </table>
         </div>
       </div>
+    </div>
     </mat-dialog-content>
       <mat-dialog-actions align="center">
         <button mat-raised-button color="primary" style="margin-right: 2%;" (click)="salvar()">Salvar</button>

@@ -20,6 +20,7 @@ export class OsModalDetalhesComponent implements OnInit {
   finalizada: boolean = false;
    cliente:any = 'null';
    funcionario: any = 'null';
+   verifica: boolean = false;
   constructor(@Inject(MAT_DIALOG_DATA) public data,
   public dialogRef: MatDialogRef<OsModalDetalhesComponent>,
   private service: OsService,
@@ -50,6 +51,7 @@ export class OsModalDetalhesComponent implements OnInit {
     if(this.ordem.status != 'FINALIZADA'){
     this.finalizada = true;
   }
+  this.verifica = true;
   }
 
 public get descricoes():FormArray{
@@ -69,7 +71,7 @@ deletar(indexComentario: number): void{
   return this.fb.group({
   comentario: [''],
   dataEnvio: ['']
-});
+  });
   }
 
 pegarOs(){
@@ -83,10 +85,12 @@ pegarOs(){
 setComentarioExistente(comentario: Descricao[]): FormArray{
   const formArray = new FormArray([]);
   comentario.forEach(com =>{
+    console.log(com)
      formArray.push(this.fb.group({
-       id: com.id,
-      comentario: com.comentario,
-      dataEnvio: com.dataEnvio
+      id: [com.id],
+      comentario: [com.comentario],
+      dataEnvio: [com.dataEnvio],
+      os: [this.data.id]
      }));
   });
   return formArray;
@@ -117,19 +121,21 @@ setComentarioExistente(comentario: Descricao[]): FormArray{
 
   finalizar(){
     this.service.finalizarOs(this.os.value.id).subscribe(data =>{
+      this.cancel();
       this.snackBar.barraSucesso('Ordem de Serviço', 'Finalizada com Sucesso!');
     });
-    setTimeout(()=>{ 
-      this.cancel();
-    },500)
+   
+    
+  
   }
 
   salvar(){
-    this.service.atualizar(this.os.value).subscribe(data =>{
+    this.service.atualizar(this.os.value.id ,this.os.value).subscribe(data =>{
+     this.cancel();
+      console.log(data)
       this.snackBar.barraSucesso('Ordem de Serviço', 'Atualizada com Sucesso!');
     });
-    setTimeout(()=>{ 
-      this.cancel();
-    },500)
+  
+ 
   }
 }

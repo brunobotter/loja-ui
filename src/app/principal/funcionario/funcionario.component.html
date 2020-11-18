@@ -2,12 +2,21 @@
     <div>
         <span class="titulo">Cadastro de Funcionarios</span>
     </div>
+    <div class="invalida" *ngIf="hasErrors('nome') && hasErrors('nome')['minlength'] ">
+      O Funcionario deve ter no minimo {{hasErrors('nome')['minlength'].requiredLength}} caracteres
+  </div>
+    <div class="invalida" *ngIf="hasErrors('nome') && hasErrors('nome')['maxlength'] ">
+      O Funcionario deve ter no maximo {{hasErrors('nome')['maxlength'].requiredLength}} caracteres
+  </div>
     <p>
         <mat-form-field class="example-full-width"  [appearance]="'outline'">
             <mat-label>Nome</mat-label>
             <input matInput formControlName="nome">
         </mat-form-field>
       </p>
+      <div class="invalida" *ngIf="hasErrors('email') && hasErrors('email')['email'] ">
+        Email invalido
+    </div>
       <p>
         <mat-form-field class="example-full-width"  [appearance]="'outline'">
             <mat-label>Email</mat-label>
@@ -62,7 +71,8 @@
         </table>
         
          <div class="divbotao">
-        <button mat-raised-button color="primary" style="margin-right: 2%;" (click)="adicionar()">Salvar</button>
+        <button mat-raised-button color="primary" style="margin-right: 2%;" (click)="adicionar()">
+          [disabled]="!funcionario.valid"Salvar</button>
         <button mat-raised-button color="warn">Limpar</button>
        </div>
       </form>

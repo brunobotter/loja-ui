@@ -1,7 +1,8 @@
 <div style="padding-left: 4%; padding-top: 2%;">
   <span style="font-size: 20PX; margin-left: 35%; ">Lista de Funcionarios</span>
   <mat-form-field>
-    <input matInput (keyup)="filtrando($event.target.value)">
+    <input matInput  (keyup)="filtrando($event.target.value )">
+    
   </mat-form-field>
   <div class="mat-elevation-z8" style="margin-top: 15px;">
   <table mat-table class="full-width-table" matSort aria-label="Elements" [dataSource]="dataSource.data">

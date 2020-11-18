@@ -2,14 +2,15 @@ import { BarraService } from './../../shared/barra-mensagem/barra.service';
 import { Item } from './../../shared/model/item';
 import { Produto } from './../../shared/model/produto';
 import { Venda } from './../../shared/model/venda';
-import { ProdutoService } from './../produto/produto.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ClienteService } from './../cliente/cliente.service';
-import { FuncionarioService } from './../funcionario/funcionario.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { VendaoService } from './vendao.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ClienteBuscaModalComponent } from 'src/app/shared/buscas/cliente-busca-modal/cliente-busca-modal.component';
+import { FuncionarioBuscaModalComponent } from 'src/app/shared/buscas/funcionario-busca-modal/funcionario-busca-modal.component';
+import { Cliente } from 'src/app/shared/model/cliente';
+import { Funcionario } from 'src/app/shared/model/funcionario';
 
 @Component({
   selector: 'app-venda',
@@ -19,17 +20,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class VendaComponent implements OnInit {
   vendaFormulario: FormGroup;
   dataVenda = new Date();
-  funcionarios: Array<any>;
-  clientes: Array<any>;
-  produtos: Array<any>;
+  funcionarios: Funcionario = new Funcionario();
+  clientes: Cliente = new Cliente();
+  produtos: Produto = new Produto();
   vendas: Venda;
   produtoRecebe: any;
 
  constructor(private fb: FormBuilder,
   private vendaService: VendaoService,
-  private produtoService: ProdutoService,
-  private serviceCliente: ClienteService,
-  private serviceFuncionario: FuncionarioService,
   public dialog: MatDialog,
   private router: Router,
   private route: ActivatedRoute,
@@ -37,13 +35,6 @@ export class VendaComponent implements OnInit {
 
   ngOnInit(): void {
     this.carregarFormularioEmBranco();
-   //lista todos
-    this.serviceFuncionario.listaTodos().subscribe(data =>{
-      this.funcionarios = data;
-    });
-    this.produtoService.listaTodos().subscribe(data =>{
-      this.produtos = data;
-    })
   }
 
 carregarFormularioEmBranco(){
@@ -57,10 +48,6 @@ carregarFormularioEmBranco(){
     listaItem: this.fb.array([this.carregarFormularioListaItem()])
   });
 }
-
-
-
-
 
   carregarFormularioListaItem(){
     this.vendaFormulario = this.fb.group({
@@ -87,17 +74,12 @@ carregarFormularioEmBranco(){
 
 
   mudaCliente(e){
-    this.cliente.setValue(e.target.value, {
-      onlySelf: true
-    });
+    this.cliente.setValue(e);
   }
 
   mudaFuncionario(e){
-    this.funcionario.setValue(e.target.value, {
-      onlySelf: true
-    });
+    this.funcionario.setValue(e);
   }
-
   mudaStatus(e){
     this.statusVenda.setValue(e.target.value,{
       onlySelf: true
@@ -132,5 +114,27 @@ carregarFormularioEmBranco(){
     return formArray;
   }
 
+  buscaCliente(){
+    const dialogConfig = new MatDialogConfig();
+      dialogConfig.autoFocus = true;
+      dialogConfig.disableClose = true;
+      dialogConfig.width = "50%";
+      this.dialog.open(ClienteBuscaModalComponent, dialogConfig).afterClosed().subscribe(res => {
+        this.mudaCliente(res)
+        this.clientes = res;
+      });
+  } 
+  
+  
+  buscaFuncionario(){
+    const dialogConfig = new MatDialogConfig();
+      dialogConfig.autoFocus = true;
+      dialogConfig.disableClose = true;
+      dialogConfig.width = "50%";
+      this.dialog.open(FuncionarioBuscaModalComponent, dialogConfig).afterClosed().subscribe(res => {
+        this.mudaFuncionario(res)
+        this.funcionarios = res;
+      });
+  } 
  
 }

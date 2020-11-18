@@ -27,15 +27,19 @@ export class ProdutoComponent implements OnInit {
     this.produto = this.fb.group({
     id: [null],
     nome: [null ,  Validators.compose([ Validators.required, Validators.minLength(2), Validators.maxLength(100)])],
-    preco: [null , Validators.required]
+    preco: [null , Validators.compose([Validators.required, Validators.min(0)])]
     })
   }
 
   adicionar(){
-    this.service.salvar(this.produto.value).subscribe(dados => {
+    this.service.salvar(this.produto.value).subscribe(
+      dados => {
       dados = dados;
       this.router.navigate(['']);
       this.snacBar.barraSucesso('Produto', 'Salvo com sucesso!');
+    }, (error) =>{
+      console.log(error.error)
+      this.snacBar.barraError(error.error.erro, '' );
     })
   }
 
@@ -43,6 +47,8 @@ export class ProdutoComponent implements OnInit {
     this.carregarFormulario();
   }
 
-
+  hasErrors(campo: string) {
+    return this.produto.get(campo).errors;
+  }
 
 }

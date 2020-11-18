@@ -50,7 +50,18 @@ import { FuncionarioAtualizarModalComponent } from './principal/funcionario/func
 import { FuncionarioDetalhesModalComponent } from './principal/funcionario/funcionario-detalhes-modal/funcionario-detalhes-modal.component';
 import { ClienteModalDetalhesComponent } from './principal/cliente/cliente-modal-detalhes/cliente-modal-detalhes.component';
 import { ClienteModalAtualizarComponent } from './principal/cliente/cliente-modal-atualizar/cliente-modal-atualizar.component';
-
+import { FuncionarioBuscaModalComponent } from './shared/buscas/funcionario-busca-modal/funcionario-busca-modal.component';
+import { ProdutoBuscaModalComponent } from './shared/buscas/produto-busca-modal/produto-busca-modal.component';
+import { VendaAtualizarModalComponent } from './principal/venda/venda-atualizar-modal/venda-atualizar-modal.component';
+import { VendaDetalhesModalComponent } from './principal/venda/venda-detalhes-modal/venda-detalhes-modal.component';
+import { CardComponent } from './shared/card/card.component';
+import { VendaDiaComponent } from './principal/venda/venda-list/venda-dia/venda-dia.component';
+import { CardVendaComponent } from './shared/card/card-venda/card-venda.component';
+import { OsAbertaComponent } from './principal/os/os-list/os-aberta/os-aberta.component';
+import { OsFinalizadasComponent } from './principal/os/os-list/os-finalizadas/os-finalizadas.component';
+import { LoginComponent } from './principal/login/login.component';
+import { HttpInterceptorModule } from './shared/guard/header-interceptor.service';
+import { HomeComponent } from './principal/home/home.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +89,18 @@ import { ClienteModalAtualizarComponent } from './principal/cliente/cliente-moda
     FuncionarioAtualizarModalComponent,
     FuncionarioDetalhesModalComponent,
     ClienteModalDetalhesComponent,
-    ClienteModalAtualizarComponent
+    ClienteModalAtualizarComponent,
+    FuncionarioBuscaModalComponent,
+    ProdutoBuscaModalComponent,
+    VendaAtualizarModalComponent,
+    VendaDetalhesModalComponent,
+    CardComponent,
+    VendaDiaComponent,
+    CardVendaComponent,
+    OsAbertaComponent,
+    OsFinalizadasComponent,
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -107,7 +129,8 @@ import { ClienteModalAtualizarComponent } from './principal/cliente/cliente-moda
     MatDatepickerModule,
     MatNativeDateModule,
     MatDialogModule,
-    MatStepperModule
+    MatStepperModule,
+    HttpInterceptorModule
   ],
   providers: [],
   bootstrap: [AppComponent],

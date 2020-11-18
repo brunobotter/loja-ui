@@ -1,0 +1,72 @@
+.more-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+ }
+ 
+ .dashboard-card {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+ }
+ 
+ 
+ .dashboard-card-content {
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 100%;
+    justify-content: center;
+    align-items: stretch;
+ }
+ 
+ mat-card {
+    display: flex;
+    flex-direction: column;
+ }
+
+ .box{
+   overflow: auto;
+   height: -webkit-calc(100% - 31px);
+}
+
+.quadrado {
+   display: inline-block;
+   float: left;
+   -moz-box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+   box-sizing: border-box;
+   margin: 0.5%;
+   width: 13.28%;
+   height: 128px;
+   padding: 0px 5px;
+   text-shadow: 0px 1px 0px #FFF;
+   text-align: center;
+   box-shadow: 0px 0px 5px 1px #DDD;
+}
+
+.quadrado .header {
+   height: 32px;
+   padding: 3px 0px;
+   width: 13.28%;
+   text-align: center;
+   background: none;
+   font-size: 12px;
+   font-weight: bold;
+   display: table-cell;
+   vertical-align: middle;
+   font-size: 20px;
+   color: blue;
+   font-weight: 500;
+}
+
+.valores {
+   padding: 0px;
+   margin-top: 20px;
+   font-size: 20px;
+   height: 76px;
+}

@@ -1,0 +1,86 @@
+
+<form class="example-form" [formGroup]="vendaFormulario">
+    <div>
+        <span class="titulo">Detelhes da Vendas</span>
+    </div>
+    <table class="example-full-width" cellspacing="0" >
+        
+      <tr>
+          <td>
+          <mat-form-field class="example-full-width"  [appearance]="'outline'">
+            <mat-label>Cliente</mat-label>
+                <input readonly matInput formControlName="cliente">
+            
+        </mat-form-field>
+      </td>
+      
+      <td >
+        <mat-form-field class="example-full-width"  [appearance]="'outline'">
+          <mat-label>Funcionario</mat-label>
+          
+              <input readonly matInput formControlName="funcionario" >
+              
+      </mat-form-field>
+    </td>
+    </tr>
+    </table> 
+      <table class="example-full-width" cellspacing="0"><tr>
+        <td>   
+           <mat-form-field appearance="fill" class="example-full-width">
+          <mat-label>Data da Venda</mat-label>
+          <input matInput [matDatepicker]="dp1" readonly formControlName="dataVenda">
+          <mat-datepicker #dp1></mat-datepicker>
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Desconto</mat-label>
+          <input matInput formControlName="desconto" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+        </mat-form-field>
+      </td></tr></table>
+  
+        <table class="example-full-width"  cellspacing="0"><tr>
+          <td>
+            <mat-form-field  appearance="fill" class="example-full-width">
+            <mat-label>Valor Total</mat-label>
+            <input readonly matInput formControlName="valorTotal" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+          </mat-form-field>
+        </td>
+          <td>
+            <mat-form-field class="example-full-width"  [appearance]="'outline'">
+              <mat-label>Status da Venda</mat-label>
+              <mat-select formControlName="statusVenda" name="status" >
+                <mat-option value="ABERTA"> Aberta </mat-option>
+                <mat-option value="FINALIZADA"> Finalizada </mat-option>
+              </mat-select>
+          </mat-form-field>
+        </td></tr></table>
+        <div formArrayName="listaItem" *ngFor="let item of listaItens.controls; let i = index">
+            <div [formGroupName]="i">
+              <table class="example-full-width" cellspacing="0"><tr>
+           <td>
+            <mat-form-field [appearance]="'outline'">
+              <mat-label >produto</mat-label>
+              <textarea matInput  readonly formControlName="produto"></textarea>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field [appearance]="'outline'">
+              <mat-label >quantidade</mat-label>
+              <textarea matInput  readonly formControlName="quantidade"></textarea>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field [appearance]="'outline'">
+              <mat-label >valor</mat-label>
+              <textarea matInput  readonly formControlName="valor"></textarea>
+            </mat-form-field>
+          </td>
+       
+          </tr>
+          </table>
+          </div>
+        </div>
+   
+  
+      </form>

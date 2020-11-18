@@ -2,12 +2,23 @@
     <div>
         <span class="titulo">Cadastro de Clientes</span>
     </div>
+
+    <div class="invalida" *ngIf="hasErrors('nome') && hasErrors('nome')['minlength'] ">
+      O Cliente deve ter no minimo {{hasErrors('nome')['minlength'].requiredLength}} caracteres
+  </div>
+  <div class="invalida" *ngIf="hasErrors('nome') && hasErrors('nome')['maxlength'] ">
+      O Cliente deve ter no maximo {{hasErrors('nome')['maxlength'].requiredLength}} caracteres
+  </div>
     <p>
+     
         <mat-form-field class="example-full-width"  [appearance]="'outline'">
             <mat-label>Nome</mat-label>
             <input matInput formControlName="nome">
         </mat-form-field>
       </p>
+      <div class="invalida" *ngIf="hasErrors('email') && hasErrors('email')['email'] ">
+        Email invalido
+    </div>
       <p>
         <mat-form-field class="example-full-width"  [appearance]="'outline'">
             <mat-label>Email</mat-label>
@@ -18,7 +29,7 @@
         <table class="example-full-width" cellspacing="0"><tr>
           <td><mat-form-field class="example-full-width"  [appearance]="'outline'">
             <mat-label>CPF</mat-label>
-            <input matInput formControlName="cpf">
+            <input matInput formControlName="cpf" type="text" mask="000.000.000-00||00.000.000/0000-00">
           </mat-form-field></td><td>
 
           <mat-form-field class="example-full-width"  [appearance]="'outline'">
@@ -64,7 +75,8 @@
         </td> </tr>
         </table>
          <div class="divbotao">
-        <button mat-raised-button color="primary" style="margin-right: 2%;" (click)="adicionar()">Salvar</button>
+        <button mat-raised-button color="primary" style="margin-right: 2%;" (click)="adicionar()"
+        [disabled]="!cliente.valid">Salvar</button>
         <button mat-raised-button color="warn">Limpar</button>
     </div>
       </form>

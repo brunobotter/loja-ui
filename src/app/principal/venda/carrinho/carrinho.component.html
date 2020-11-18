@@ -1,17 +1,14 @@
-<form class="example-form" [formGroup]="itemFormulario">
-    <div>
+<form class="formulario" [formGroup]="itemFormulario">
+    <div class="form-titulo">
         <span class="titulo">Vendas</span>
     </div>
-    <table class="example-full-width" cellspacing="0">
+    <table class="tabela" cellspacing="0">
       <tr>
         <td>
         <mat-form-field class="example-full-width"  [appearance]="'outline'">
             <mat-label>produto</mat-label>
-            <mat-select formControlName="produto" name="produto" (change)="mudaproduto($event)">
-              <mat-option *ngFor="let produto of produtos" [value]="produto">
-                {{produto.nome}}
-              </mat-option>
-            </mat-select>
+                  <input readonly matInput (click)="buscaProduto()" >{{produtos.nome}}
+          
         </mat-form-field>
       </td>
       <td>
@@ -28,9 +25,9 @@
       </td>
     </tr>
     </table> 
-    <button (click)="adicionarItem()">Adicionar item</button>
+    <button mat-raised-button color="primary" (click)="adicionarItem()">Adicionar item</button>
 
-    <div formArrayName="listaItem" *ngFor="let item of listaItens.controls; let i = index">
+    <div class="array" formArrayName="listaItem" *ngFor="let item of listaItens.controls; let i = index">
       <div [formGroupName]="i">
         <table class="example-full-width" cellspacing="0"><tr>
          
@@ -65,7 +62,7 @@
     </table>
     </div>
   </div>
-  <div>
-  <button (click)="finalizar()">finalizar</button>
+  <div class="botao">
+  <button mat-raised-button color="primary" (click)="finalizar()">finalizar</button>
 </div>
-      </form>
+</form>

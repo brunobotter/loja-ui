@@ -1,14 +1,14 @@
 import { ClienteBuscaModalComponent } from './../../shared/buscas/cliente-busca-modal/cliente-busca-modal.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { HttpClient } from '@angular/common/http';
 import { BarraService } from './../../shared/barra-mensagem/barra.service';
-import { FuncionarioService } from './../funcionario/funcionario.service';
-import { ClienteService } from './../cliente/cliente.service';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { OsService } from './os.service';
 import { Component, OnInit } from '@angular/core';
 import { Os } from 'src/app/shared/model/os';
+import { FuncionarioBuscaModalComponent } from 'src/app/shared/buscas/funcionario-busca-modal/funcionario-busca-modal.component';
+import { Cliente } from 'src/app/shared/model/cliente';
+import { Funcionario } from 'src/app/shared/model/funcionario';
 
 @Component({
   selector: 'app-os',
@@ -18,42 +18,23 @@ import { Os } from 'src/app/shared/model/os';
 export class OsComponent implements OnInit {
 
   constructor(private service: OsService,
-    private serviceCliente: ClienteService,
-    private serviceFuncionario: FuncionarioService,
+
     private router: Router,
-    private route: ActivatedRoute,
     private fb: FormBuilder,
     private snackBar: BarraService,
-    private http: HttpClient,
     public dialog: MatDialog) { }
 
   os: FormGroup;
   data: any;
-  clientes: Array<any>;
+  clientes: Cliente = new Cliente();
   ordem = new Os();
-  funcionarios: Array<any>;
+  funcionarios: Funcionario = new Funcionario();
   dataInicial = new Date();
+  nomeCliente: any;
 
   ngOnInit(): void {
-
     this.carregarFormulario();
-    this.data = this.route.snapshot.data['clientes'];
-  //lista todos
-    this.serviceFuncionario.listaTodos().subscribe(data =>{
-      this.funcionarios = data;
-    });
-  
   }
-
-  pesquisa(){
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-    dialogConfig.disableClose = false;
-    dialogConfig.width = "25%";
-    this.dialog.open(ClienteBuscaModalComponent, dialogConfig).afterClosed().subscribe(res => {
-    });
-  }
-
 
   carregarFormulario(){
     this.os = this.fb.group({
@@ -63,7 +44,7 @@ export class OsComponent implements OnInit {
       preco: [0.0, Validators.required],
       cliente: [null],
       funcionario: [null],
-      status: [null],
+      status: ['ABERTA'],
       descricao: this.fb.array([]),
     });
   }
@@ -81,7 +62,6 @@ export class OsComponent implements OnInit {
     
 
     salvar(){
-      console.log(this.os.value);
       this.service.adiciona(this.os.value).subscribe(data =>{
         this.snackBar.barraSucesso('Ordem de Serviço','Aberta com Sucesso!');
         this.router.navigate(['']);
@@ -100,6 +80,29 @@ get status(){
   return this.os.get('status');
 }
 
+buscaCliente(){
+  const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.disableClose = true;
+    dialogConfig.width = "50%";
+    this.dialog.open(ClienteBuscaModalComponent, dialogConfig).afterClosed().subscribe(res => {
+      this.mudaCliente(res)
+      this.clientes = res;
+    });
+} 
+
+
+buscaFuncionario(){
+  const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.disableClose = true;
+    dialogConfig.width = "50%";
+    this.dialog.open(FuncionarioBuscaModalComponent, dialogConfig).afterClosed().subscribe(res => {
+      this.mudaFuncionario(res)
+      this.funcionarios = res;
+    });
+} 
+
 mudaStatus(e){
   this.status.setValue(e.target.value,{
     onlySelf: true
@@ -107,15 +110,11 @@ mudaStatus(e){
 }
 
     mudaCliente(e){
-      this.cliente.setValue(e.target.value, {
-        onlySelf: true
-      });
+      this.cliente.setValue(e);
     }
 
     mudaFuncionario(e){
-      this.funcionario.setValue(e.target.value, {
-        onlySelf: true
-      });
+      this.funcionario.setValue(e);
     }
 
 

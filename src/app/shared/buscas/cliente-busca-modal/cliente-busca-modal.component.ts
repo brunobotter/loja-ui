@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { OSFiltro } from 'src/app/principal/os/os.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-cliente-busca-modal',
@@ -12,49 +14,42 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClienteBuscaModalComponent implements OnInit {
 
-  queryFields = new FormControl();
-  resultado$: Observable<any>;
-  readonly FIELDS: 'nome';
-  
-  total: number;
+  filtro = new OSFiltro();
   data: any;
-
-  constructor(private http: HttpClient,
-    private clienteService: ClienteService) { }
+  constructor(private clienteService: ClienteService,
+    public dialogRef: MatDialogRef<ClienteBuscaModalComponent>) { }
 
   ngOnInit(): void {
-   //lista todos
-    this.resultado$= this.queryFields.valueChanges
-    .pipe(
-      map(value => value.trim()),
-      filter(value => value.length > 1),
-      debounceTime(100),
-      distinctUntilChanged(),
-      tap((res: any) => this.total = res.total),
-      map((res: any) => res.result
-      )
-    );
-  }
-
-    loadCiclosByEmpresa(nome: string) {
-      this.clienteService.buscaPorNome(nome)
-          .subscribe(response => this.data = response);
- 
-
+    this.clienteService.pesquisar(this.filtro)
+    .subscribe(resultado =>{ 
+      this.data = resultado.cliente;
+    });
   }
 
 
-
-    buscar(){
-      let value = this.queryFields.value;
-      this.loadCiclosByEmpresa(value);
-      if(value && (value = value.trim()) !== ''){
-      
-      this.resultado$ = this.clienteService.buscaPorNome(value)
-      .pipe(
-        tap((res: any) => this.total = res.total),
-        map((res: any) => res.results)
-      )
-    }
+  pesquisar(nome =''){
+    this.filtro.nome = nome;
+    this.clienteService.pesquisar(this.filtro)
+    .subscribe(resultado =>{ 
+      console.log(resultado)
+      this.data = resultado.cliente;
+    });
+  }  
+  
+  filtrando(event){
+    const pagina = 0;
+    const limite = 100;
+    let nome = event;
+    this.pesquisar(nome);
   }
+
+  seleciona(id){
+    this.clienteService.listaPorId(id).subscribe(data =>{
+      this.cancel(data);
+    })
+  }
+
+  cancel(data){
+    this.dialogRef.close(data);
+  } 
 }

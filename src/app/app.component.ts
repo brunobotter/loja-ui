@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import {MatAccordion} from '@angular/material/expansion';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ export class AppComponent {
   title = 'loja';
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
-
+verifica:boolean = false;
 
 isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -21,5 +22,20 @@ isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Ha
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver,
+    private router: Router) {}
+
+  public sair(){
+    localStorage.clear();
+    this.router.navigate(['login']);
+  }
+
+  public esconderBarra(){
+
+    if(localStorage.getItem('token') !== null && localStorage.getItem('token').toString().trim() !== null ){
+     return false;
+   }else{
+     return true;
+   }
+ }
 }

@@ -41,9 +41,7 @@ datas = new Date();
   }
 
 
-  calcel(){
-    this.dialogRef.close();
-  }
+
 
 pegarUsuario(){
   this.service.buscaPorId(this.data.idOs).subscribe(datas =>{

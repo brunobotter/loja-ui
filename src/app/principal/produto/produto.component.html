@@ -4,13 +4,26 @@
 </div>
   
     <table class="example-full-width" cellspacing="0" ><tr>
-      <td><mat-form-field class="example-full-width" [appearance]="'outline'">
+      <td>
+         
+    <div class="invalida" *ngIf="hasErrors('nome') && hasErrors('nome')['minlength'] ">
+      O Produto deve ter no minimo {{hasErrors('nome')['minlength'].requiredLength}} caracteres
+  </div>
+  <div class="invalida" *ngIf="hasErrors('nome') && hasErrors('nome')['maxlength'] ">
+      O produto deve ter no maximo {{hasErrors('nome')['maxlength'].requiredLength}} caracteres
+  </div>
+        <mat-form-field class="example-full-width" [appearance]="'outline'">
         <mat-label>Nome Produto</mat-label>
         <input matInput formControlName="nome">
-      </mat-form-field></td>
+  
+      </mat-form-field>
+     </td>
   
     </tr></table>
-  
+
+  <div class="invalida" *ngIf="hasErrors('preco') && hasErrors('preco')['min'] ">
+    O Valor nao pode ser menor que R$ 0,00 
+</div>
     <p>
       <mat-form-field class="example-full-width"  [appearance]="'outline'">
         <mat-label>Preço</mat-label>
@@ -19,7 +32,8 @@
     </p>
   
      <div class="divbotao">
-    <button mat-raised-button color="primary" style="margin-right: 2%;" (click)="adicionar()">Salvar</button>
+    <button mat-raised-button color="primary" style="margin-right: 2%;" (click)="adicionar()"
+    [disabled]="!produto.valid">Salvar</button>
     <button mat-raised-button color="warn" (click)="limpar()">Limpar</button>
 </div>
   </form>

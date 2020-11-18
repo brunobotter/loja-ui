@@ -1,0 +1,27 @@
+<mat-card class="dashboard-card">
+    <mat-card-header>
+        <mat-card-title>
+            {{title}}
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="dashboard-card-content">
+        <ng-content></ng-content>
+        <div class="box">
+            <div class="quadrado">
+                <div class="header">Total OS</div>
+                <div *ngIf="verificaTodos" class="valores"><a routerLink="/os-lista">{{listaTodos.length}}</a></div>
+            </div>
+           <div class="quadrado">
+            <div class="header">Aberto</div>
+            <div *ngIf="verificaAberto" class="valores"><a routerLink="/os-aberta">{{listaAberta.length}}</a></div>
+           </div>
+          <div class="quadrado">
+              <div class="header">Finalizado</div>
+              <div *ngIf="verificaFechado" class="valores"><a routerLink="/os-finalizado">{{listaFechada.length}}</a></div>
+            </div>
+            
+        
+    </div>
+        
+    </mat-card-content>
+ </mat-card>

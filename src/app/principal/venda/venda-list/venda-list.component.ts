@@ -7,6 +7,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { VendaListDataSource } from './venda-list-datasource';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { VendaDetalhesModalComponent } from '../venda-detalhes-modal/venda-detalhes-modal.component';
+import { VendaAtualizarModalComponent } from '../venda-atualizar-modal/venda-atualizar-modal.component';
 
 @Component({
   selector: 'app-venda-list',
@@ -27,7 +30,8 @@ export class VendaListComponent implements AfterViewInit, OnInit {
 
 constructor(private service: VendaoService,
   private snackbar: BarraService,
-  private modelService: DialogService ){}
+  private modelService: DialogService,
+  public dialog: MatDialog ){}
 
   ngOnInit() {
     this.pesquisar();
@@ -39,14 +43,15 @@ constructor(private service: VendaoService,
     this.table.dataSource = this.dataSource;
   }
 
-  pesquisar(pagina = 0, limite = 5){
+  pesquisar(pagina = 0, limite = 5, nome = ''){
     this.filtro.page = pagina;
     this.filtro.limite = limite;
+    this.filtro.nome = nome;
     this.service.pesquisar(this.filtro)
-    .then(resultado =>{ 
+    .subscribe(resultado =>{ 
       this.dataSource.data = resultado.venda;
       this.dados = resultado.total;
-    });
+    },error => console.log(error));
   } 
 
   onPaginateChange(event) {
@@ -68,12 +73,32 @@ deletar(id){
 }
 
 atualizar(idOs){
- 
+  const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.disableClose = false;
+    dialogConfig.width = "50%";
+    dialogConfig.data = {idOs};
+    this.dialog.open(VendaAtualizarModalComponent, dialogConfig).afterClosed().subscribe(res => {
+    });
 }
 
-  detalhes(id){
- 
+  detalhes(idOs){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.disableClose = false;
+    dialogConfig.width = "50%";
+    dialogConfig.data = {idOs};
+    this.dialog.open(VendaDetalhesModalComponent
+    , dialogConfig).afterClosed().subscribe(res => {
+    });
 
+}
+
+filtrando(event){
+  const pagina = 0;
+  const limite = 10;
+  let nome = event;
+  this.pesquisar(pagina, limite, nome);
 }
 
 }

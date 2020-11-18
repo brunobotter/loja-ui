@@ -26,7 +26,7 @@ export class ProdutoListComponent implements AfterViewInit, OnInit {
   dataSource = new ProdutoListDataSource(this.ELEMENT_DATA);
   filtro = new ProdutoFiltro();
   dados: any;
-
+  texto: string;
 
   constructor(private service: ProdutoService,
     private snackbar: BarraService,
@@ -46,20 +46,23 @@ export class ProdutoListComponent implements AfterViewInit, OnInit {
   }
 
 
-  pesquisar(pagina = 0, limite = 5){
+  pesquisar(pagina = 0, limite = 5, nome = ''){
     this.filtro.page = pagina;
     this.filtro.limite = limite;
+    this.filtro.nome = nome;
     this.service.pesquisar(this.filtro)
-    .then(resultado =>{ 
+    .subscribe(resultado =>{ 
       this.dataSource.data = resultado.produto;
       this.dados = resultado.total;
-    });
+    }, error => console.log(error));
   }
 
   onPaginateChange(event) {
     const pagina = event.pageIndex;
     const limite = event.pageSize;
-    this.pesquisar(pagina, limite);
+    const nome = ''
+    this.pesquisar(pagina, limite, nome);
+
   }
 
   deletar(id){
@@ -83,5 +86,13 @@ export class ProdutoListComponent implements AfterViewInit, OnInit {
     this.dialog.open(ProdutoModalAtualizarComponent, dialogConfig).afterClosed().subscribe(res => {
     });
   }
+
+  filtrando(event){
+    const pagina = 0;
+    const limite = 100;
+    let nome = event;
+    this.pesquisar(pagina, limite, nome);
+  }
+
   
 }

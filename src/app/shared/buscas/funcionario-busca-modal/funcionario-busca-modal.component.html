@@ -1,0 +1,19 @@
+<form class="formulario">
+<p>
+    <mat-label class="titulo">Consulta de funcionarios</mat-label>
+    <input search class="busca" (keyup)="filtrando($event.target.value)" placeholder="pesquisar">
+</p>
+
+<table class="tabela">
+    <thead>
+        <tr>
+            <td class="titulo-tabela">Nome</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let resultado of data">
+            <td (click)="seleciona(resultado.id)"><a class="cor">{{resultado.nome}}</a></td>
+        </tr>
+    </tbody>
+</table>
+</form>

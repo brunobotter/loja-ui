@@ -48,11 +48,13 @@ dados: any;
     this.table.dataSource = this.dataSource;
   }
 
-  pesquisar(pagina = 0, limite = 5){
+  pesquisar(pagina = 0, limite = 5, nome = ''){
     this.filtro.page = pagina;
     this.filtro.limite = limite;
+    this.filtro.nome = nome;
     this.service.pesquisar(this.filtro)
-    .then(resultado =>{ 
+    .subscribe(resultado =>{ 
+      console.log(resultado)
       this.dataSource.data = resultado.cliente;
       this.dados = resultado.total;
     });
@@ -69,6 +71,14 @@ relatorio(){
     this.relatorioService.handleFile(res, 'cliente.pdf');
   });
 }
+
+  filtrando(event){
+    const pagina = this.paginator.pageIndex;
+    const limite = this.paginator.pageSize;
+    let nome = event;
+    this.pesquisar(pagina, limite, nome);
+  }
+
 
 
 

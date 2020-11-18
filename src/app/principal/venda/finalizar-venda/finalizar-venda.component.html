@@ -1,4 +1,4 @@
-<form class="example-form" [formGroup]="vendaFormulario">
+<form class="formulario" [formGroup]="vendaFormulario">
     <div>
         <span class="titulo">Cadastro de Venda</span>
     </div>
@@ -38,18 +38,10 @@
           <td>
             <mat-form-field  appearance="outline" class="example-full-width">
             <mat-label>Valor Total</mat-label>
-            <input matInput formControlName="valorTotal" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+            <input matInput readonly formControlName="valorTotal" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
           </mat-form-field>
         </td>
-          <td>
-            <mat-form-field class="example-full-width"  [appearance]="'outline'">
-              <mat-label>Status da Venda</mat-label>
-              <mat-select formControlName="statusVenda" name="status"  >
-                <mat-option value="ABERTA"> Aberta </mat-option>
-                <mat-option value="FINALIZADA"> Finalizada </mat-option>
-              </mat-select>
-          </mat-form-field>
-        </td></tr></table>
+         </tr></table>
 
       
          <div class="divbotao">

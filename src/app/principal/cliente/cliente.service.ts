@@ -26,7 +26,7 @@ export class ClienteService {
   constructor(private http: HttpClient) { }
 
 
-pesquisar(filtro: ClienteFiltro): Promise<any>{
+pesquisar(filtro: ClienteFiltro): Observable<any>{
   let params = new HttpParams()
   .set('page', filtro.page.toString())
   .set('limite', filtro.limite.toString());
@@ -34,16 +34,15 @@ pesquisar(filtro: ClienteFiltro): Promise<any>{
     params = params.set('nome', filtro.nome);
   }
 
-return this.http.get<any>(`${this.apiUrl}`, {params})
-.toPromise()
-.then(response =>{
-  const cliente = response._embedded.clienteVoes;
+return this.http.get<any>(`${this.apiUrl}/busca_por_nome/`, {params})
+.pipe(map(response =>{
+  const cliente = response._embedded.clientes;
   const resultado = {
     cliente,
     total: response.page
   };
   return resultado
-})
+}));
 }
 
 public buscaPorNome( nome: string):  Observable<any>{
